@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hrms_app/components/my_activity.dart';
 import 'package:hrms_app/components/my_card_action.dart';
+import 'package:hrms_app/components/recent_activity_model.dart';
 import 'package:hrms_app/models/checkin_provider.dart';
 import 'package:hrms_app/models/pages_notifie.dart';
 import 'package:hrms_app/pages/checkin_detail_page.dart';
@@ -9,32 +9,38 @@ import 'package:hrms_app/pages/scan_checkin_page.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  const HomePage({super.key}); 
+  @override 
+  Widget build(BuildContext context) { 
 
-  @override
-  Widget build(BuildContext context) {
-    List activity = [
-      [
-        "Today",
-        "On Time",
-        "Check In",
-        Icons.watch_later_outlined,
-        Colors.green[900],
-      ],
-      [
-        "Today",
-        "On Time",
-        "Check In",
-        Icons.watch_later_outlined,
-        Colors.green[900],
-      ],
-      [
-        "Yesterday",
-        "On Time",
-        "Check In",
-        Icons.output_rounded,
-        Colors.red.shade300,
-      ],
+    final List<Activity> activities = [
+      Activity(
+        title: "Check In",
+        subtitle: "Today",
+        time: "08:30 AM",
+        status: "On Time",
+        statusColor: Colors.green,
+        icon: Icons.access_time_filled,
+        iconColor: Colors.green,
+      ),
+      Activity(
+        title: "Check Out",
+        subtitle: "Yesterday",
+        time: "05:45 PM",
+        status: "Overtime",
+        statusColor: Colors.blue,
+        icon: Icons.logout_rounded,
+        iconColor: Colors.redAccent,
+      ),
+      Activity(
+        title: "Leave Request",
+        subtitle: "24 Jan 2026",
+        time: "Annual Leave",
+        status: "Approved",
+        statusColor: Colors.indigo,
+        icon: Icons.event_available,
+        iconColor: Colors.indigo,
+      ), 
     ];
 
     // List<OwnerAccModel> ownerAcc = [
@@ -110,7 +116,7 @@ class HomePage extends StatelessWidget {
                     children: [
                       MyCardAction(
                         icon: Icons.qr_code,
-                        title: "Check In", 
+                        title: "Check In",
                         onTap: () {
                           final isCheckedIn = context
                               .read<CheckInProvider>()
@@ -146,7 +152,7 @@ class HomePage extends StatelessWidget {
                             MaterialPageRoute(
                               builder: (context) => CreateLeave(),
                             ),
-                          );      
+                          );
                         },
                         // color: Colors.green[200],
                       ),
@@ -157,7 +163,7 @@ class HomePage extends StatelessWidget {
                         title: "View Payslip",
                         onTap: () {
                           selectedPagesNotifier.value = 2;
-                        }, 
+                        },
                       ),
                     ],
                   );
@@ -175,27 +181,75 @@ class HomePage extends StatelessWidget {
                     "Recent Activity",
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                   ),
-                ], 
+                ],
               ),
             ),
             Divider(),
-            Expanded(
-              child: ListView.builder(
-                itemCount: activity.length,
-                itemBuilder: (context, index) {
-                  return MyActivity(
-                    status: activity[index][1],
-                    time: activity[index][0],
-                    type: activity[index][2],
-                    icon: activity[index][3],
-                    color: activity[index][4],
-                  );
-                },
-              ),
-            ),
+
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [ 
+                // Activity List
+                ListView.separated(
+                  shrinkWrap: true, // Important for use inside a SingleChildScrollView
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: activities.length,
+                  separatorBuilder: (context, index) =>
+                      const Divider(height: 1, indent: 70),
+                  itemBuilder: (context, index) {
+                    final item = activities[index];
+                    return ListTile(
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 8,
+                      ),
+                      leading: Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: item.iconColor.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Icon(item.icon, color: item.iconColor),
+                      ),
+                      title: Text(
+                        item.title,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                        ),
+                      ),
+                      subtitle: Text(
+                        "${item.subtitle} • ${item.time}",
+                        style: TextStyle(color: Colors.grey[600]),
+                      ),
+                      trailing: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 6,
+                        ),
+                        decoration: BoxDecoration(
+                          color: item.statusColor.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Text(
+                          item.status,
+                          style: TextStyle(
+                            color: item.statusColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ), 
           ],
         ),
       ),
     );
   }
 }
+
+
