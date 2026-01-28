@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hrms_app/components/my_card_attendance.dart';
-import 'package:hrms_app/components/my_drawer.dart';
 import 'package:hrms_app/components/my_leavetile_request.dart';
 import 'package:hrms_app/models/leave_page_model.dart';
 import 'package:hrms_app/pages/create_leave.dart';
@@ -52,14 +51,15 @@ class AttendancePage extends StatelessWidget {
             padding: EdgeInsets.all(20),
             height: 170,
             decoration: BoxDecoration(
+               color: Colors.teal.shade300,       
               boxShadow: [
                 BoxShadow(
-                  color: Colors.amber.shade100,
+                  color: Colors.teal.shade100,
                   blurRadius: 3, 
                   offset: Offset(0, 1),
                 ),
               ],
-              color: Colors.amber,    
+             
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(16),
                 bottomRight: Radius.circular(16), 
