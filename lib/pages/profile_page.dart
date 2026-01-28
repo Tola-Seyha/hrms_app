@@ -13,9 +13,10 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TextEditingController _firstName  = TextEditingController(text: firstName);
+    // TextEditingController _firstName  = TextEditingController(text: firstName); 
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text("Profile "),
         actions: [
           CircleAvatar(

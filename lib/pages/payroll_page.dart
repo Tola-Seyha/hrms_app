@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hrms_app/components/my_drawer.dart';
-import 'package:hrms_app/components/my_paytile.dart';
-import 'package:hrms_app/models/payrol_model.dart';
+import 'package:hrms_app/models/payslip_model.dart';
 import 'package:hrms_app/pages/pay_detail.dart';
 
 class PayrollPage extends StatelessWidget {
@@ -9,18 +8,79 @@ class PayrollPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<PayrolModel> payitem = [
-      PayrolModel(date: "Jan", month: "01/01/2025 - 02/01/2025"),
-      PayrolModel(date: "Feb", month: "02/01/2025 - 03/01/2025"),
-      PayrolModel(date: "Mar", month: "03/01/2025 - 04/01/2025"),
+    List<PayslipModel> payslips = [
+      PayslipModel(
+        employeeName: "Tola Seyha",
+        periodStart: DateTime(2026, 3, 1),
+        periodEnd: DateTime(2026, 4, 31),
+        transportAllowance: 500,
+        mealAllowance: 300,
+        // Earnings
+        basicSalary: 2000,  
+        housingAllowance: 500,
+        overtime: 100,
+        //Deductions
+        incomeTax: 200,
+        socialSecurity: 300,
+        healthInsurance: 150,
+        pensionContribution: 100, 
+        status: "Paid",
+      ),
+      PayslipModel(
+        employeeName: "Tola Seyha",
+        periodStart: DateTime(2026, 3, 1),
+        periodEnd: DateTime(2026, 3, 31), 
+        transportAllowance: 500,
+        mealAllowance: 300,
+        // Earnings
+        basicSalary: 2000, 
+        housingAllowance: 500,
+        overtime: 100,
+        //Deductions
+        incomeTax: 200,
+        socialSecurity: 300,
+        healthInsurance: 150,
+        pensionContribution: 100, 
+        status: "Paid",
+      ),
+      PayslipModel(
+        employeeName: "Tola Seyha",
+        periodStart: DateTime(2026, 1, 1),
+        periodEnd: DateTime(2026, 2, 31),
+        transportAllowance: 500,
+        mealAllowance: 300,
+        // Earnings
+        basicSalary: 2000,
+        housingAllowance: 500,
+        overtime: 100, 
+        //Deductions
+        incomeTax: 200,
+        socialSecurity: 300,
+        healthInsurance: 150,
+        pensionContribution: 100, 
+        status: "Paid",
+      ),
+     
     ];
+
+    double getThisMonthTotal(List<PayslipModel> payslips) {
+      final now = DateTime.now();
+      return payslips
+          .where(
+            (p) => 
+                p.periodStart.month == now.month &&
+                p.periodStart.year == now.year,
+          )
+          .fold(0.0, (sum, p) => sum + p.netSalary);
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Payroll",  
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500), 
+          "Payroll",
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
         ),
-        backgroundColor: Theme.of(context).colorScheme.primary,
+        backgroundColor: Colors.amber,
         actions: [
           IconButton(
             onPressed: () {},
@@ -31,93 +91,111 @@ class PayrollPage extends StatelessWidget {
       drawer: MyDrawer(),
       body: Column(
         children: [
-          SizedBox(height: 10), 
-          GestureDetector(
-            onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => PayrollDetail(),));
-            },
+          SizedBox(height: 15),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 14),
-              height: 130, 
               width: double.infinity,
+              padding: const EdgeInsets.only(
+                left: 10,
+                right: 10,
+                top: 20,
+                bottom: 20,
+              ),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
                 color: Colors.green.shade50,
-                border: Border.all(color: Colors.green.shade300)
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: Colors.green.shade200, width: 1),
               ),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    "Net pay this month", 
-                    style: TextStyle( 
-                      fontSize: 16,  
-                      fontWeight: FontWeight.w500, 
-                      color: Colors.grey.shade600,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 14.0), 
-                    child: Divider(thickness: 0.5,),
-                  ),
-                  SizedBox(height: 10,),
-                  Text(
-                    "2000\$",
+                  Text( 
+                    "Net pay this month",
                     style: TextStyle(
-                      fontSize: 30,
+                      fontSize: 16,
                       fontWeight: FontWeight.w500,
-                      color: Colors.green.shade700,
+                      color: Colors.grey.shade800,
                     ),
-                  ), 
-                  // SizedBox(height: 5,),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 14.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text("View" , style: TextStyle(color: Colors.blue,  decoration: TextDecoration.underline, decorationColor: Colors.blue, fontSize: 14)),  
-                      ],
+                  ),
+                  const SizedBox(height: 8),
+                  Divider(),
+                  const SizedBox(height: 8),
+                  Text(
+                    "\$${getThisMonthTotal(payslips).toStringAsFixed(2)}",
+                    style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.green,
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
           ),
-          SizedBox(height: 10,),
+
+          SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 14.0),
-            child: Column(  
-              crossAxisAlignment: CrossAxisAlignment.start, 
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Payroll History", style: TextStyle( fontSize: 18, fontWeight: FontWeight.w500, color: Colors.black87),),   
-                Divider(thickness:0.5 ,), 
+                SizedBox(height: 10,),
+                Text(
+                  "Payslip History", 
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black87,
+                  ),
+                ),
+                Divider(thickness: 0.5),
               ],
             ),
-          ), 
+          ),
           Expanded(
-            child: ListView.builder(itemCount: payitem.length,itemBuilder: (context, index) {
-              return MyPaytile(date: payitem[index].date, month: payitem[index].month);
-               
-            },),
-            // child: ListView(
-            //   children: [ 
-            //     MyPaytile(
-            //       month: "Jan",
-            //       date: "12/01/2026 - 12/02/2026",
-            //     ),
-            //     MyPaytile(
-            //       month: "Jan",
-            //       date: "12/01/2026 - 12/02/2026",
-            //     ),
-            //     MyPaytile(
-            //       month: "Jan",
-            //       date: "12/01/2026 - 12/02/2026",
-            //     ), 
-            //   ],
-            // ),
-          )
-        
-        
+            child: ListView.builder(
+              itemCount: payslips.length,
+              itemBuilder: (context, index) {
+                final p = payslips[index];
+
+                return ListTile(
+                  leading: const Icon(Icons.calendar_month, color: Colors.blue),
+                  title: Text(
+                    "${p.periodStart.day}/${p.periodStart.month}/${p.periodStart.year} - "
+                    "${p.periodEnd.day}/${p.periodEnd.month}/${p.periodEnd.year}",
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  subtitle: Text(
+                    "${p.periodStart.month}/${p.periodStart.year}",
+                    style: TextStyle(fontSize: 12),
+                  ),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        p.status,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: p.status == "Paid" || p.status == "paid"
+                              ? Colors.green
+                              : Colors.orange,
+                        ),
+                      ),
+                      const Icon(Icons.chevron_right, size: 24),
+                    ],
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => PayrollDetail(payslip: p),
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
+          ),
         ],
       ),
     );

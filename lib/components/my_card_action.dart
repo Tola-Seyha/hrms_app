@@ -16,7 +16,7 @@ class MyCardAction extends StatelessWidget {
           decoration: BoxDecoration( 
             borderRadius: BorderRadius.circular(10),
             border: Border.all(
-              color: Theme.of(context).colorScheme.secondary,
+              color:  Colors.amber.shade200,
             )
           ),
           child: Column(

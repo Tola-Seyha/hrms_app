@@ -20,7 +20,7 @@ class NavbarWidget extends StatelessWidget {
           ),
 
           child: NavigationBar(
-            backgroundColor: Theme.of(context).colorScheme.primary,
+            backgroundColor: Colors.amber,
             destinations: [
               NavigationDestination(
                 icon: Icon(
@@ -30,20 +30,7 @@ class NavbarWidget extends StatelessWidget {
                 ),
                 label: "Home",
                 selectedIcon: Icon(Icons.home, size: 30, color: Colors.black87),
-              ),
-              // NavigationDestination(
-              //   icon: Icon(
-              //     Icons.people_alt_outlined,
-              //     size: 30,
-              //     color: Colors.black87,
-              //   ),
-              //   label: "Employees",
-              //   selectedIcon: Icon(
-              //     Icons.people_alt,
-              //     size: 30,
-              //     color: Colors.black87, 
-              //   ),
-              // ),
+              ), 
               NavigationDestination(
                 icon: Icon(
                   Icons.watch_later_outlined,
@@ -71,6 +58,7 @@ class NavbarWidget extends StatelessWidget {
                 ),
               ),
               NavigationDestination(
+
                 icon: Icon(
                   Icons.person_2_outlined,
                   size: 30,
@@ -87,8 +75,10 @@ class NavbarWidget extends StatelessWidget {
             ],
             onDestinationSelected: (int value) {
               selectedPagesNotifier.value = value;
+
             },
-            selectedIndex: selectedPage,
+            indicatorColor: Colors.amber,
+            selectedIndex: selectedPage, 
           ),
         );
       },

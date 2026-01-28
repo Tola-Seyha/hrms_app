@@ -1,193 +1,140 @@
 import 'package:flutter/material.dart';
+import 'package:hrms_app/models/payslip_model.dart';
 
 class PayrollDetail extends StatelessWidget {
-  const PayrollDetail({super.key});
+  final PayslipModel payslip;
 
+  const PayrollDetail({super.key, required this.payslip});
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade200,
-
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Payroll Detail",
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.w400),
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
         ),
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.notification_important_outlined, size: 30),
-          ),
-        ],
+        backgroundColor:  Colors.amber,
       ),
-      body: Column(
-        children: [
-          SizedBox(height: 10),
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 14),
-            height: 130,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color: Colors.green.shade50,
-              border: Border.all(color: Colors.green.shade300),
+      body: Padding(
+        padding: const EdgeInsets.only(top: 20 , left: 20, right: 20),
+        child: Column(
+          children: [
+            // Total Card
+            Container(
+              width: double.infinity, 
+              padding: const EdgeInsets.only(top: 15, bottom: 20 ,left: 10, right: 10),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.green.shade200, width: 1),
+                color: Colors.green.shade50,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 14.0), 
+                child: Column(
+                  children: [
+                    Text(
+                      "Net Pay",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.grey.shade800,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Divider(),
+                    const SizedBox(height: 8),
+                    Text(
+                      "\$${payslip.netSalary.toStringAsFixed(2)}",
+                      style: const TextStyle(
+                        fontSize: 24,
+                        color: Colors.green,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+
+            const SizedBox(height: 16),
+            // Earnings
+            Row(
               children: [
                 Text(
-                  "Total",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.grey.shade600,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 14.0),
-                  child: Divider(thickness: 0.5),
-                ),
-                SizedBox(height: 10),
-                Text(
-                  "2000\$",
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.green.shade700,
-                  ),
+                  "Earning",
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                 ),
               ],
             ),
-          ),
-          SizedBox(height: 20),
+            Divider(),
 
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 14.0),
-            child: Container(
-              padding: EdgeInsets.all(14),
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Earning",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-                  ),
-                  Divider(thickness: 0.5),
-                  ListTile(
-                    title: Text(
-                      "Basic:",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    // leading: Text("Total"),
-                    trailing: Text(
-                      "\$2000",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                  ListTile(
-                    title: Text(
-                      "Total:",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    // leading: Text("Total"),
-                    trailing: Text(
-                      "\$2000",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                  ListTile(
-                    title: Text(
-                      "Total:",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    // leading: Text("Total"),
-                    trailing: Text(
-                      "\$2000",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                  ListTile(
-                    title: Text(
-                      "Total:",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    // leading: Text("Total"),
-                    trailing: Text(
-                      "\$2000",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 10,),
-                  MaterialButton(
-                    onPressed: () {}, 
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    color: Colors.grey.shade200,
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                        top: 10.0,
-                        bottom: 10,
-                        left: 20,
-                        right: 20,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.save_alt_outlined, size: 30),
-                          SizedBox(width: 10),
-                          Text(
-                            "Download",
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 10,),
-                ],
+            _row("Basic Salary", payslip.basicSalary),
+            _row("Housing Allowance", payslip.housingAllowance),
+            _row("Transport Allowance", payslip.transportAllowance),
+            _row("Meal Allowance", payslip.mealAllowance), 
+            _row("Overtime Pay", payslip.overtime),
+            Divider(),
+            _row("Total", payslip.grossEarnings),
+            SizedBox(height: 20),
+
+            // Deductions
+            Row(
+              children: [
+                Text(
+                  "Total Deductions",
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                ),
+              ],
+            ),
+            const Divider(),
+            _row("Income Tax", -payslip.incomeTax),
+            _row("Social Security", -payslip.socialSecurity),
+            _row("Health Insurance", -payslip.healthInsurance),
+            _row("Pension Contribution", -payslip.pensionContribution),
+            Divider(),
+            _row("Total", -payslip.totalDeductions),
+            // SizedBox(height: 20),
+            Divider(),
+            SizedBox(height: 10), 
+
+            // const Spacer(),
+            ElevatedButton.icon(
+              onPressed: () {},
+              icon: const Icon(Icons.download, color: Colors.black45, size: 20),
+              label: const Text(
+                "Download Payslip",
+                style: TextStyle(color: Colors.black),
+              ), 
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+
+                backgroundColor: Colors.grey.shade300,
+                foregroundColor: Colors.white,
               ),
             ),
-          ),
-          SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 14.0),
-            child: Row(children: [
-               
-                ],
+            // Spacer(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _row(String label, double value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(label, style: TextStyle(fontSize: 16)),
+          Text(
+            "\$${value.toStringAsFixed(2)}",
+            style: TextStyle(
+              color: value < 0 ? Colors.red : Colors.black,
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
             ),
           ),
         ],

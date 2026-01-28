@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hrms_app/components/my_card_attendance.dart';
 import 'package:hrms_app/components/my_drawer.dart';
 import 'package:hrms_app/components/my_leavetile_request.dart';
+import 'package:hrms_app/models/leave_page_model.dart';
 import 'package:hrms_app/pages/create_leave.dart';
 
 class AttendancePage extends StatelessWidget {
@@ -9,57 +10,34 @@ class AttendancePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List leaveHistory = [
-      [
-        "assets/image/profile.png",
-        "Tola Seyha",
-        "11/11/2026",
-        "Approve",
-        Colors.green.shade200,
-      ],
-      [
-        "assets/image/profile.png",
-        "Seyha The king",
-        "11/11/2026",
-        "Approve",
-        Colors.green.shade200,
-      ],
-      [
-        "assets/image/profile.png",
-        "Seyha The king",
-        "11/11/2026",
-        "Pending",
-        Colors.amber.shade200,
-      ],
-      [
-        "assets/image/profile.png",
-        "Seyha The king",
-        "11/11/2026",
-        "Approve",
-        Colors.green.shade200,
-      ],
-        [
-        "assets/image/profile.png",
-        "Seyha The king",
-        "11/11/2026",
-        "Pending",
-        Colors.amber.shade200,
-      ], 
-        [
-        "assets/image/profile.png",
-        "Seyha The king",
-        "11/11/2026",
-        "Pending",
-        Colors.amber.shade200,
-      ], 
+    List<LeavePageModel> leaveHistory = [
+      LeavePageModel(
+        imagePath: "assets/image/profile.png", 
+        name: "John Doe",
+        date: "2023-08-01",
+        status: "Approved",
+      ), 
+      LeavePageModel(
+        imagePath: "assets/image/profile.png", 
+        name: "John Doe",
+        date: "2023-08-01",
+        status: "Approved",
+      ), 
+      LeavePageModel(
+        imagePath: "assets/image/profile.png", 
+        name: "John Doe",
+        date: "2023-08-01", 
+        status: "Rejected", 
+      ), 
     ];
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text(
           "Attendaces",
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
         ),
-        backgroundColor: Theme.of(context).colorScheme.primary,
+        backgroundColor: Colors.amber,
         actions: [
           IconButton(
             onPressed: () {}, 
@@ -67,17 +45,24 @@ class AttendancePage extends StatelessWidget {
           ), 
         ],
       ),
-      drawer: MyDrawer(),
+      // drawer: MyDrawer(),
       body: Column(
-        children: [
+        children: [ 
           Container(
             padding: EdgeInsets.all(20),
             height: 170,
             decoration: BoxDecoration(
-              color: Colors.teal.shade100,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.amber.shade100,
+                  blurRadius: 3, 
+                  offset: Offset(0, 1),
+                ),
+              ],
+              color: Colors.amber,    
               borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(20),
-                bottomRight: Radius.circular(20),
+                bottomLeft: Radius.circular(16),
+                bottomRight: Radius.circular(16), 
               ),
             ),
             child: Center(
@@ -111,9 +96,10 @@ class AttendancePage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 14.0),
             child: MaterialButton(
-              // hoverColor: Colors.amber,
+              // hoverColor: Colors.amber,  
+              // color: Colors.indigo.shade500,
               shape: Border.all(),
-              splashColor: Colors.amber.shade200,
+              splashColor: Colors. white,
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => CreateLeave(),));
               },
@@ -131,8 +117,8 @@ class AttendancePage extends StatelessWidget {
                       "Create Leave",
                       style: TextStyle( 
                         fontSize: 16,
-                         fontWeight: FontWeight.w400,
-                        color: Colors.black87,
+                         fontWeight: FontWeight.w500,
+                        color: Colors.black87, 
                       ),
                     ),
                   ],
@@ -156,18 +142,23 @@ class AttendancePage extends StatelessWidget {
               ),
             ],
           ),
-          Divider(thickness: 0.5),
+          Divider(thickness: 1), 
           Expanded(
             child: ListView.builder(
               itemCount: leaveHistory.length,
               itemBuilder: (context, index) {
+                final leave = leaveHistory[index];
                 return MyLeavetileRequest(
-                  color: leaveHistory[index][4],
-                  date: leaveHistory[index][2],
-                  name: leaveHistory[index][1],
-                  status: leaveHistory[index][3],
-                  imagePath: leaveHistory[index][0],
-                );
+                  color: leave.status == "Approved" || leave.status == "approved"
+                      ? Colors.green.shade200
+                      : leave.status == "Rejected" || leave.status == "rejected"
+                          ? Colors.amber.shade200
+                          : Colors.red,
+                  date: leave.date,
+                  name: leave.name,
+                  status: leave.status,
+                  imagePath: leave.imagePath,
+                ); 
               },
             ),
           ),

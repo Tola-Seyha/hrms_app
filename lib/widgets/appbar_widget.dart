@@ -53,7 +53,7 @@ class AppbarWidget extends StatelessWidget {
           ),
         ),
         // title: Image.network(''),
-        backgroundColor: Theme.of(context).colorScheme.primary,
+        backgroundColor: Colors.amber,
         actions: [
           IconButton(
             onPressed: () {},
