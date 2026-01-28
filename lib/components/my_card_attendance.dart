@@ -15,7 +15,7 @@ class MyCardAttendance extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
-        decoration: BoxDecoration(
+        decoration: BoxDecoration(     
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),
         ),
@@ -30,7 +30,7 @@ class MyCardAttendance extends StatelessWidget {
                 color: color,
               ), 
             ),
-            Text(type, style: TextStyle(fontSize: 16, color: Colors.grey)),
+            Text(type, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.grey)),
           ],
         ),
       ),

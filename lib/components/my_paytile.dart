@@ -1,23 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:hrms_app/pages/pay_detail.dart';
 
 class MyPaytile extends StatelessWidget {
   final String month;
   final String date;
+  final Function()? onTap;
 
-  const MyPaytile({super.key, required this.date, required this.month});
+  const MyPaytile({super.key, required this.date, required this.month, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 1.0),
       child: ListTile(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => PayrollDetail()),
-          );
-        },
+        onTap:  onTap,
         shape: Border(bottom: BorderSide(width: 0.5)),
         // tileColor: Colors.grey.shade100,
         leading: Icon(

@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hrms_app/components/my_activity.dart';
 import 'package:hrms_app/components/my_card_action.dart';
+import 'package:hrms_app/models/checkin_provider.dart';
 import 'package:hrms_app/models/pages_notifie.dart';
-import 'package:hrms_app/pages/check_in_out_page.dart';
+import 'package:hrms_app/pages/checkin_detail_page.dart';
+import 'package:hrms_app/pages/create_leave.dart';
+import 'package:hrms_app/pages/scan_checkin_page.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -44,11 +48,12 @@ class HomePage extends StatelessWidget {
           builder: (BuildContext context, dynamic selectedPage, Widget? child) {
             return GestureDetector(
               onTap: () {
-                selectedPagesNotifier.value = 3; 
+                selectedPagesNotifier.value = 3;
               },
-              child: Row(      
+              child: Row(
                 children: [
-                  Image.asset("assets/image/profile.png",
+                  Image.asset(
+                    "assets/image/profile.png",
                     height: 40,
                     fit: BoxFit.contain,
                   ),
@@ -82,15 +87,15 @@ class HomePage extends StatelessWidget {
           },
         ),
         // title: Image.network(''),
-        backgroundColor: Theme.of(context).colorScheme.primary,
+        backgroundColor: Colors.amber,
         actions: [
           IconButton(
             onPressed: () {},
             icon: Icon(Icons.notification_important_outlined, size: 30),
           ),
-        ],  
-      ), 
-      // drawer: MyDrawer(), 
+        ],
+      ),
+      // drawer: MyDrawer(),
       body: Center(
         child: Column(
           children: [
@@ -107,18 +112,41 @@ class HomePage extends StatelessWidget {
                         icon: Icons.qr_code,
                         title: "Check In", 
                         onTap: () {
-                          
-                           Navigator.push(context, MaterialPageRoute(builder: (context) => CheckInOutPage(),));
-                          
+                          final isCheckedIn = context
+                              .read<CheckInProvider>()
+                              .isCheckedIn;
+
+                          if (isCheckedIn) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const CheckInDetailPage(),
+                              ),
+                            );
+                          } else {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const ScanCheckInPage(),
+                              ),
+                            );
+                          }
                         },
                       ),
+
                       SizedBox(width: 15),
 
                       MyCardAction(
                         icon: Icons.date_range_outlined,
                         title: "Apply Leave",
                         onTap: () {
-                          selectedPagesNotifier.value = 1;
+                          // selectedPagesNotifier.value = 1;
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CreateLeave(),
+                            ),
+                          );      
                         },
                         // color: Colors.green[200],
                       ),
@@ -129,54 +157,14 @@ class HomePage extends StatelessWidget {
                         title: "View Payslip",
                         onTap: () {
                           selectedPagesNotifier.value = 2;
-                        },
-                        // color: Colors.red[200],
+                        }, 
                       ),
                     ],
                   );
                 },
               ),
-              // height: 150, color: Colors.amber 
+              // height: 150, color: Colors.amber
             ),
-            SizedBox(height: 10),
-            // Container(
-            //   padding: EdgeInsets.symmetric(horizontal: 14),
-            //   height: 130,
-            //   // color: Colors.amber,
-            //   child: ValueListenableBuilder(
-            //     valueListenable: selectedPagesNotifier,
-            //     builder: (context, seletedPage, child) {
-            //       return Row(
-            //         children: [
-            //           MyCardAction(
-            //             icon: Icons.people_alt_outlined,
-            //             title: "Employees",
-            //             onTap: () {
-            //               selectedPagesNotifier.value = 1;
-            //             },
-            //             // color: Colors.blue[200], 
-            //           ),
-            //           SizedBox(width: 15),
-
-            //           MyCardAction(
-            //             icon: Icons.bed_outlined,
-            //             title: "Holiday",
-            //             onTap: () {},
-            //             // color: Colors.red[200],
-            //           ),
-            //           SizedBox(width: 15), 
-            //           MyCardAction(
-            //             icon: Icons.outgoing_mail,
-            //             title: "On Leave",
-            //             onTap: () {},
-            //             // color: Colors.blue[200],
-            //           ),
-            //         ],
-            //       );
-            //     },
-            //   ),
-            //   // height: 150, color: Colors.amber
-            // ),
             SizedBox(height: 20),
 
             Padding(
@@ -185,9 +173,9 @@ class HomePage extends StatelessWidget {
                 children: [
                   Text(
                     "Recent Activity",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                   ),
-                ],
+                ], 
               ),
             ),
             Divider(),

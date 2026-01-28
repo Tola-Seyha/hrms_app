@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:hrms_app/models/checkin_provider.dart';
 import 'package:hrms_app/models/employee_provider.dart';
 import 'package:hrms_app/pages/login_page.dart';
-import 'package:hrms_app/theme/colors.dart';
 import 'package:provider/provider.dart';
 
 void main() {
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => EmployeeProvider(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => EmployeeProvider()),
+        ChangeNotifierProvider(create: (context) => CheckInProvider()),
+      ], 
       child: const MyApp(),
     ),
   );
@@ -20,8 +23,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: lightMode,
-
+      // theme: lightMode, 
       // darkTheme: darkMode,
       home: LoginPage(),
     );
